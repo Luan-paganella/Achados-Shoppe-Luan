@@ -10,7 +10,7 @@
       font-family: Arial, sans-serif;
       background-color: #fff; /* Fundo branco */
       color: #000; /* Letras pretas */
-      font-weight: bold; /* Negrito em tudo */
+      font-weight: bold; /* Negrito */
     }
 
     /* Banner fixo */
@@ -38,7 +38,7 @@
       color: #000;
     }
 
-    /* Compensar o banner fixo */
+    /* Conteúdo abaixo do banner */
     .conteudo {
       padding-top: 320px;
     }
@@ -56,11 +56,11 @@
       background-color: #f5f5f5;
       border: 1px solid #ddd;
       border-radius: 8px;
-      width: 180px;
+      width: 45%; /* 2 por linha */
+      max-width: 250px;
       padding: 15px;
       text-align: center;
       transition: transform 0.2s;
-      color: #000;
     }
 
     .produto:hover {
@@ -77,6 +77,12 @@
       color: #000;
       font-weight: bold;
     }
+
+    @media (max-width: 600px) {
+      .produto {
+        width: 100%; /* Em telas menores, 1 por linha */
+      }
+    }
   </style>
 </head>
 <body>
@@ -86,30 +92,20 @@
     <div class="frase">Só as peças pura pra vocês ficarem raul de verdade</div>
   </div>
 
-  <!-- Conteúdo abaixo do banner -->
+  <!-- Conteúdo principal -->
   <div class="conteudo">
     <div class="produtos">
-      <!-- Slots de produtos -->
-      <div class="produto">
-        <img src="https://via.placeholder.com/150" alt="Produto 1">
-        <h3>Produto 1</h3>
-        <p>Descrição do produto.</p>
-      </div>
-      <div class="produto">
-        <img src="https://via.placeholder.com/150" alt="Produto 2">
-        <h3>Produto 2</h3>
-        <p>Descrição do produto.</p>
-      </div>
-      <div class="produto">
-        <img src="https://via.placeholder.com/150" alt="Produto 3">
-        <h3>Produto 3</h3>
-        <p>Descrição do produto.</p>
-      </div>
-      <div class="produto">
-        <img src="https://via.placeholder.com/150" alt="Produto 4">
-        <h3>Produto 4</h3>
-        <p>Descrição do produto.</p>
-      </div>
+      <!-- 20 produtos -->
+      <!-- Substitua as imagens pelos seus produtos reais -->
+      <!-- Repete estrutura de produto -->
+      <!-- Use imagens reais depois -->
+      ${Array.from({ length: 20 }, (_, i) => `
+        <div class="produto">
+          <img src="https://via.placeholder.com/150" alt="Produto ${i + 1}">
+          <h3>Produto ${i + 1}</h3>
+          <p>Descrição do produto ${i + 1}</p>
+        </div>
+      `).join('')}
     </div>
   </div>
 </body>
