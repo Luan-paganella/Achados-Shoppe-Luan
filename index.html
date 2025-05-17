@@ -8,12 +8,11 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #fff; /* Fundo branco */
-      color: #000; /* Letras pretas */
-      font-weight: bold; /* Negrito */
+      background-color: #fff;
+      color: #000;
+      font-weight: bold;
     }
 
-    /* Banner fixo */
     .banner {
       position: fixed;
       top: 0;
@@ -38,12 +37,10 @@
       color: #000;
     }
 
-    /* Conteúdo abaixo do banner */
     .conteudo {
       padding-top: 320px;
     }
 
-    /* Estilo dos slots de produto */
     .produtos {
       display: flex;
       flex-wrap: wrap;
@@ -56,7 +53,7 @@
       background-color: #f5f5f5;
       border: 1px solid #ddd;
       border-radius: 8px;
-      width: 45%; /* 2 por linha */
+      width: 45%;
       max-width: 250px;
       padding: 15px;
       text-align: center;
@@ -78,34 +75,135 @@
       font-weight: bold;
     }
 
+    .produto a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 12px;
+      background-color: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .produto a:hover {
+      background-color: #333;
+    }
+
     @media (max-width: 600px) {
       .produto {
-        width: 100%; /* Em telas menores, 1 por linha */
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Banner fixo com imagem e frase -->
   <div class="banner">
     <img src="https://i.pinimg.com/originals/1c/6c/cf/1c6ccf570c4d7027f9ecb4e9682d278a.jpg" alt="Banner" />
     <div class="frase">Só as peças pura pra vocês ficarem raul de verdade</div>
   </div>
 
-  <!-- Conteúdo principal -->
   <div class="conteudo">
     <div class="produtos">
-      <!-- 20 produtos -->
-      <!-- Substitua as imagens pelos seus produtos reais -->
-      <!-- Repete estrutura de produto -->
-      <!-- Use imagens reais depois -->
-      ${Array.from({ length: 20 }, (_, i) => `
-        <div class="produto">
-          <img src="https://via.placeholder.com/150" alt="Produto ${i + 1}">
-          <h3>Produto ${i + 1}</h3>
-          <p>Descrição do produto ${i + 1}</p>
-        </div>
-      `).join('')}
+      <!-- Produto 1 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 1">
+        <h3>Produto 1</h3>
+        <p>Descrição do produto 1</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 2 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 2">
+        <h3>Produto 2</h3>
+        <p>Descrição do produto 2</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 3 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 3">
+        <h3>Produto 3</h3>
+        <p>Descrição do produto 3</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 4 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 4">
+        <h3>Produto 4</h3>
+        <p>Descrição do produto 4</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 5 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 5">
+        <h3>Produto 5</h3>
+        <p>Descrição do produto 5</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 6 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 6">
+        <h3>Produto 6</h3>
+        <p>Descrição do produto 6</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 7 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 7">
+        <h3>Produto 7</h3>
+        <p>Descrição do produto 7</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 8 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 8">
+        <h3>Produto 8</h3>
+        <p>Descrição do produto 8</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 9 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 9">
+        <h3>Produto 9</h3>
+        <p>Descrição do produto 9</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 10 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 10">
+        <h3>Produto 10</h3>
+        <p>Descrição do produto 10</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 11 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 11">
+        <h3>Produto 11</h3>
+        <p>Descrição do produto 11</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 12 -->
+      <div class="produto">
+        <img src="https://via.placeholder.com/150" alt="Produto 12">
+        <h3>Produto 12</h3>
+        <p>Descrição do produto 12</p>
+        <a href="#" target="_blank">Ver produto</a>
+      </div>
+
+      <!-- Produto 13 ao 20 -->
+      <!-- Pode copiar e colar mais blocos conforme for mandando os links -->
+
     </div>
   </div>
 </body>
