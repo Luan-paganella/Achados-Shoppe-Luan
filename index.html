@@ -3,280 +3,277 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pesquisa Spotify</title>
+  <title>SpotifyPesquisa</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body, html {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       height: 100%;
       font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
+      background-color: white;
+      color: black;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
-
     .banner {
       background-color: #1DB954;
       color: white;
       font-weight: bold;
-      font-size: 1.8rem;
-      height: 60px;
-      line-height: 60px;
-      text-align: center;
+      font-size: 1.8em;
+      height: 33.33vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
       flex-shrink: 0;
+    }
+    .banner.roda-pe {
+      height: 33.33vh;
+    }
+    .total-gain {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
       user-select: none;
     }
-
-    .main-content {
-      flex: 1;
+    .content {
+      flex-grow: 1;
       overflow-y: auto;
+      padding: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
     }
-
     .card {
-      background-color: white;
+      background: white;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 360px;
+      width: 320px;
       padding: 20px;
       text-align: center;
+      position: relative;
     }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .header img {
-      height: 24px;
-    }
-
-    .header span {
-      background-color: green;
-      color: white;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 1rem;
-      min-width: 80px;
-    }
-
-    .profile-img {
+    #questionImage {
       width: 120px;
       height: 120px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin: 15px auto;
-      display: block;
-    }
-
-    .reward-box {
-      background-color: #fffbe6;
-      border: 2px solid #ffd700;
       border-radius: 12px;
-      padding: 15px;
+      object-fit: cover;
+      margin: 0 auto 20px;
+      display: block;
+      box-shadow: 0 0 8px rgba(0,0,0,0.15);
+    }
+    #questionContainer {
+      font-weight: bold;
       margin-bottom: 20px;
-      font-size: 1.1rem;
-      color: green;
-      font-weight: bold;
-      min-height: 36px;
-      line-height: 36px;
+      font-size: 1.1em;
     }
-
-    .question {
-      margin-bottom: 15px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      min-height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .buttons {
-      margin-bottom: 25px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
     .buttons button {
-      flex: 1 1 30%;
-      padding: 10px 0;
+      background-color: #1DB954;
       border: none;
       border-radius: 8px;
+      color: white;
       font-weight: bold;
-      color: white;
+      padding: 10px 15px;
+      margin: 6px 8px 12px 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-size: 1rem;
-      user-select: none;
-      min-width: 90px;
+      font-size: 1em;
+      width: 80px;
+      transition: background-color 0.2s ease;
     }
-
-    .btn-1 { background-color: #27ae60; }
-    .btn-2 { background-color: #2980b9; }
-    .btn-3 { background-color: #8e44ad; }
-
-    .buttons button.selected {
-      box-shadow: 0 0 8px 3px #4caf50;
-      font-weight: bolder;
-      opacity: 1;
+    .buttons button:hover {
+      background-color: #14833b;
     }
-
-    .submit-btn {
-      background-color: #27ae60;
+    #submitBtn {
+      background-color: #1DB954;
       color: white;
-      padding: 14px 0;
+      padding: 12px 20px;
       border: none;
       border-radius: 8px;
-      font-size: 1.1rem;
+      font-size: 1.1em;
       font-weight: bold;
       cursor: pointer;
+      margin-top: 10px;
       width: 100%;
-      user-select: none;
       transition: background-color 0.3s ease;
     }
-
-    .submit-btn:hover {
-      background-color: #1e8449;
+    #submitBtn:hover {
+      background-color: #14833b;
     }
-
+    #notification {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #1DB954;
+      min-height: 24px;
+    }
     @media (max-width: 400px) {
       .card {
+        width: 90vw;
         padding: 15px;
       }
-      .buttons button {
-        font-size: 0.9rem;
-        min-width: 80px;
+      #questionImage {
+        width: 100px;
+        height: 100px;
       }
-      .reward-box {
-        font-size: 1rem;
+      .buttons button {
+        width: 70px;
+        font-size: 0.9em;
+        padding: 8px 10px;
+      }
+      #submitBtn {
+        font-size: 1em;
+      }
+      .banner {
+        font-size: 1.4em;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="banner">Spotify</div>
+  <div class="banner topo">
+    Spotify
+    <div class="total-gain" id="totalGainDisplay">Total: R$ 0</div>
+  </div>
 
-  <div class="main-content">
+  <div class="content">
     <div class="card">
-      <div class="header">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify Logo" />
-        <span id="totalReward">R$ 0,00</span>
-      </div>
-
-      <img class="profile-img" src="https://i.imgur.com/NlX46dN.jpg" alt="Matuê" />
-
-      <div id="rewardBox" class="reward-box">&nbsp;</div>
-
-      <div id="questionContainer" class="question">Carregando pergunta...</div>
-
-      <div id="buttonsContainer" class="buttons"></div>
-
-      <button id="submitBtn" class="submit-btn">Enviar respostas e ganhar</button>
+      <img id="questionImage" src="" alt="Foto do artista" />
+      <div id="questionContainer"></div>
+      <div class="buttons" id="buttonsContainer"></div>
+      <button id="submitBtn">Enviar respostas e ganhar</button>
+      <div id="notification"></div>
     </div>
   </div>
 
-  <div class="banner">Spotify</div>
+  <div class="banner roda-pe">Spotify</div>
 
 <script>
   const questions = [
     {
+      artist: "Matuê",
+      image: "https://i.imgur.com/NlX46dN.jpg",
       text: "Qual faixa etária você acha que mais escuta o cantor Matuê?",
       options: ["-18 anos", "+18 anos", "Não sei"]
     },
     {
-      text: "Você recomendaria Matuê para algum parente?",
+      artist: "Ludmilla",
+      image: "https://i.imgur.com/QdEjF8d.jpg",
+      text: "Você recomendaria Ludmilla para algum parente?",
       options: ["Sim", "Não", "Talvez"]
     },
     {
-      text: "De 0 a 10, quanto você gosta do Matuê?",
+      artist: "Anitta",
+      image: "https://i.imgur.com/IS3cN2I.jpg",
+      text: "De 0 a 10, quanto você gosta da Anitta?",
       options: ["Pouco", "Mais ou Menos", "Muito"]
     },
     {
-      text: "Você escuta Matuê diariamente?",
+      artist: "Jão",
+      image: "https://i.imgur.com/vjHZ8Xd.jpg",
+      text: "Você escuta Jão diariamente?",
       options: ["Raramente", "De vez em quando", "Todo dia"]
     },
     {
-      text: "Qual sua música favorita do Matuê?",
-      options: ["Kenny G", "Quer Voar", "Anos Luz"]
+      artist: "IZA",
+      image: "https://i.imgur.com/KgfpQJi.jpg",
+      text: "Qual sua música favorita da IZA?",
+      options: ["Pesadão", "Dona de Mim", "Ginga"]
     },
     {
-      text: "Você já foi a algum show do Matuê?",
-      options: ["Sim, várias vezes", "Uma vez", "Nunca"]
+      artist: "Djonga",
+      image: "https://i.imgur.com/Nsn0zLx.jpg",
+      text: "Você considera Djonga um artista influente?",
+      options: ["Sim", "Não", "Talvez"]
     },
     {
-      text: "Como você classificaria o estilo do Matuê?",
-      options: ["Único", "Comum", "Não gosto muito"]
+      artist: "Pabllo Vittar",
+      image: "https://i.imgur.com/vv2zEaO.jpg",
+      text: "Você recomenda Pabllo Vittar para amigos?",
+      options: ["Sim", "Não", "Talvez"]
     }
   ];
 
-  const minTotal = 321.00;
-  const maxTotal = 367.00;
+  let currentQuestionIndex = 0;
+  let totalGain = 0;
 
-  let currentQuestion = 0;
-  let selectedOption = null;
-  let totalReward = 0;
-
+  const questionImage = document.getElementById("questionImage");
   const questionContainer = document.getElementById("questionContainer");
   const buttonsContainer = document.getElementById("buttonsContainer");
   const submitBtn = document.getElementById("submitBtn");
-  const rewardBox = document.getElementById("rewardBox");
-  const totalRewardSpan = document.getElementById("totalReward");
+  const notification = document.getElementById("notification");
+  const totalGainDisplay = document.getElementById("totalGainDisplay");
 
-  // Função para gerar valor random entre min e max (float com 2 casas)
-  function randomBetween(min, max) {
-    return +(Math.random() * (max - min) + min).toFixed(2);
+  function getRandomGain() {
+    // Para que o total fique entre 321 e 367, e 7 perguntas,
+    // faz um ganho entre ~45 e ~53 por resposta:
+    return Math.floor(Math.random() * (53 - 45 + 1)) + 45;
   }
 
-  // Calcula os ganhos para as perguntas exceto a última, para garantir total dentro da faixa
-  function calcularGanhos() {
-    const numPerguntas = questions.length;
-    const ganhos = [];
-    let acumulado = 0;
+  function loadQuestion(index) {
+    const q = questions[index];
+    questionImage.src = q.image;
+    questionContainer.textContent = `${index + 1}. ${q.text}`;
+    buttonsContainer.innerHTML = "";
+    notification.textContent = "";
+    submitBtn.disabled = true;
 
-    // Para as N-1 primeiras perguntas
-    for(let i=0; i < numPerguntas - 1; i++) {
-      // Vamos dar ganhos aleatórios entre 35 e 48
-      let valor = randomBetween(35, 48);
-      ganhos.push(valor);
-      acumulado += valor;
-    }
-
-    // Último ganho ajustado pra fechar total entre minTotal e maxTotal
-    // Limite superior para o último ganho:
-    let ultimoMin = Math.max(35, minTotal - acumulado);
-    let ultimoMax = Math.min(48, maxTotal - acumulado);
-
-    // Se ultrapassou maxTotal (ou seja, acumulado já > maxTotal-35), ajusta tudo proporcionalmente:
-    if (ultimoMax < ultimoMin) {
-      // Ajuste proporcional para todos os ganhos para caber na faixa
-      const fator = (maxTotal - 35) / acumulado;
-      for(let i=0; i < ganhos.length; i++) ganhos[i] = +(ganhos[i] * fator).toFixed(2);
-      acumulado = ganhos.reduce((a,b) => a+b, 0);
-      ultimoMin = 35;
-      ultimoMax = maxTotal - acumulado;
-    }
-
-    let ultimoValor = randomBetween(ultimoMin, ultimoMax);
-    ganhos.push(ultimoValor);
-    acumulado += ultimoValor;
-
-    // Ajusta acumulado para 2 casas decimais e retorna array
-    totalReward = +acumulado.toFixed(2);
-    return ganhos;
+    q.options.forEach(option => {
+      const btn = document.createElement("button");
+      btn.textContent = option;
+      btn.addEventListener("click", () => {
+        // Remove seleção anterior
+        [...buttonsContainer.children].forEach(b => b.style.backgroundColor = "#1DB954");
+        btn.style.backgroundColor = "#14833b";
+        submitBtn.disabled = false;
+        submitBtn.dataset.selected = option;
+      });
+      buttonsContainer.appendChild(btn);
+    });
   }
 
-  const ganhosPorPergunta
+  submitBtn.addEventListener("click", () => {
+    if (!submitBtn.dataset.selected) {
+      notification.style.color = "red";
+      notification.textContent = "Por favor, selecione uma opção antes de continuar.";
+      return;
+    }
+
+    const gain = getRandomGain();
+    totalGain += gain;
+    // limitar totalGain entre 321 e 367:
+    if(totalGain > 367) totalGain = 367;
+    if(totalGain < 321) totalGain = 321;
+
+    totalGainDisplay.textContent = `Total: R$ ${totalGain}`;
+    notification.style.color = "#1DB954";
+    notification.textContent = `Você ganhou R$ ${gain} por essa resposta!`;
+
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions.length) {
+      setTimeout(() => {
+        loadQuestion(currentQuestionIndex);
+      }, 1500);
+    } else {
+      setTimeout(() => {
+        notification.textContent = `Pesquisa finalizada! Total ganho: R$ ${totalGain}`;
+        buttonsContainer.innerHTML = "";
+        submitBtn.style.display = "none";
+        questionImage.style.display = "none";
+        questionContainer.textContent = "Obrigado por participar da pesquisa!";
+      }, 1500);
+    }
+
+    submitBtn.dataset.selected = null;
+    submitBtn.disabled = true;
+  });
+
+  loadQuestion(currentQuestionIndex);
+</script>
+
+</body>
+</html>
