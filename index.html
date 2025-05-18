@@ -3,42 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TikTokPesquisa</title>
+  <title>SpotifyPesquisa</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #ffffff;
       color: #000000;
-      padding-top: 80px; /* espaço para o banner fixo */
+      padding-top: 100px;
+      padding-bottom: 100px;
     }
 
-    /* Banner verde fixo no topo */
     .banner {
       position: fixed;
-      top: 0;
       left: 0;
       width: 100%;
-      background-color: #2ecc71;
+      background-color: #1DB954;
       color: white;
       text-align: center;
-      padding: 20px 0;
-      font-size: 1.8em;
+      padding: 30px 0;
+      font-size: 2em;
       font-weight: bold;
       z-index: 1000;
     }
 
-    /* Container centralizado */
+    .banner.topo {
+      top: 0;
+    }
+
+    .banner.rodape {
+      bottom: 0;
+    }
+
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      min-height: calc(100vh - 80px);
+      min-height: calc(100vh - 200px);
       padding: 30px 20px;
     }
 
-    /* Campo de texto */
     .text-input {
       width: 100%;
       max-width: 500px;
@@ -50,7 +55,6 @@
       box-sizing: border-box;
     }
 
-    /* Opções (radio buttons) */
     .options {
       display: flex;
       flex-direction: column;
@@ -64,7 +68,6 @@
       cursor: pointer;
     }
 
-    /* Botão de confirmação */
     .confirm-button {
       padding: 12px 24px;
       font-size: 1em;
@@ -80,7 +83,6 @@
       background-color: #333;
     }
 
-    /* Resultado exibido */
     .result {
       margin-top: 30px;
       font-size: 1.1em;
@@ -90,15 +92,13 @@
 </head>
 <body>
 
-  <!-- Banner fixo -->
-  <div class="banner">TikTokPesquisa</div>
+  <!-- Banner topo -->
+  <div class="banner topo">SpotifyPesquisa</div>
 
-  <!-- Conteúdo principal -->
+  <!-- Conteúdo -->
   <div class="container">
-    <!-- Campo de texto -->
     <input type="text" class="text-input" id="textoDigitado" placeholder="Digite algo aqui...">
 
-    <!-- Opções de múltipla escolha -->
     <div class="options">
       <label class="option-label">
         <input type="radio" name="opcao" value="Opção 1"> Opção 1
@@ -111,14 +111,14 @@
       </label>
     </div>
 
-    <!-- Botão -->
     <button class="confirm-button" onclick="confirmarEscolha()">Confirmar Escolha</button>
 
-    <!-- Resultado -->
     <div class="result" id="resultado"></div>
   </div>
 
-  <!-- Script para interação -->
+  <!-- Banner rodapé -->
+  <div class="banner rodape">SpotifyPesquisa</div>
+
   <script>
     function confirmarEscolha() {
       const texto = document.getElementById('textoDigitado').value.trim();
