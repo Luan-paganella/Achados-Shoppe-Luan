@@ -1,160 +1,150 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
   <title>SpotifyPesquisa</title>
   <style>
-    html, body {
-      margin: 0;
-      height: 100%;
+    body {
+      background: linear-gradient(to bottom, #1DB954, #ffffff);
       font-family: Arial, sans-serif;
-      background-color: white;
-      color: black;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      text-align: center;
+      padding: 40px;
+      margin: 0;
     }
 
-    .banner {
+    .card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 360px;
+      margin: auto;
+      padding: 24px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header img {
+      height: 28px;
+    }
+
+    .header span {
       background-color: #1DB954;
       color: white;
-      text-align: center;
+      padding: 6px 16px;
+      border-radius: 20px;
       font-weight: bold;
-      font-size: 2.5em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-shrink: 0;
-      height: 33.33vh; /* 1/3 da tela */
-      user-select: none;
+      font-size: 16px;
     }
 
-    .content {
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 20px 30px;
-      box-sizing: border-box;
+    .profile-img {
+      width: 140px;
+      border-radius: 12px;
+      margin: 20px 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
-    h2 {
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
-
-    .artist {
-      margin-bottom: 40px;
-    }
-
-    .question {
+    .reward-box {
+      background-color: #eaffea;
+      border: 2px dashed #1DB954;
+      border-radius: 12px;
+      padding: 20px;
       margin-bottom: 20px;
     }
 
-    .question p {
-      font-weight: bold;
-      margin-bottom: 8px;
+    .reward-box h2 {
+      color: #1DB954;
+      margin: 10px 0 0;
+      font-size: 24px;
     }
 
-    .options label {
-      margin-right: 15px;
-      cursor: pointer;
+    .question {
+      margin-bottom: 12px;
+      font-weight: bold;
+      font-size: 16px;
     }
 
-    button {
-      background-color: #1DB954;
-      color: white;
-      font-weight: bold;
-      padding: 12px 25px;
+    .buttons {
+      margin-bottom: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 18px;
+      margin: 5px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
+      font-weight: bold;
+      color: white;
       cursor: pointer;
-      font-size: 1.1em;
+      font-size: 14px;
+      transition: 0.2s;
     }
 
-    button:hover {
+    .btn-under-18 {
+      background-color: #1DB954;
+    }
+
+    .btn-under-18:hover {
       background-color: #14833b;
     }
 
-    #resultado {
-      margin-top: 30px;
+    .btn-over-18 {
+      background-color: #888;
+    }
+
+    .btn-over-18:hover {
+      background-color: #555;
+    }
+
+    .submit-btn {
+      background-color: #ffc107;
+      color: black;
+      padding: 14px 22px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
       font-weight: bold;
-      font-size: 1.2em;
-      color: #1DB954;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #e0a800;
     }
 
   </style>
 </head>
 <body>
 
-  <div class="banner topo">SpotifyPesquisa</div>
-
-  <div class="content">
-    <div class="artist">
-      <h2>1. Matue</h2>
-
-      <form id="pesquisaForm">
-
-        <div class="question">
-          <p>Recomendaria Matue para algum parente?</p>
-          <div class="options">
-            <label><input type="radio" name="q1" value="Sim" /> Sim</label>
-            <label><input type="radio" name="q1" value="Não" /> Não</label>
-            <label><input type="radio" name="q1" value="Talvez" /> Talvez</label>
-          </div>
-        </div>
-
-        <div class="question">
-          <p>De 0 a 10, quanto você gosta do Matue?</p>
-          <div class="options">
-            <label><input type="radio" name="q2" value="Pouco" /> Pouco</label>
-            <label><input type="radio" name="q2" value="Mais ou Menos" /> Mais ou Menos</label>
-            <label><input type="radio" name="q2" value="Muito" /> Muito</label>
-          </div>
-        </div>
-
-        <div class="question">
-          <p>Você escuta Matue diariamente?</p>
-          <div class="options">
-            <label><input type="radio" name="q3" value="Raramente" /> Raramente</label>
-            <label><input type="radio" name="q3" value="De vez em quando" /> De vez em quando</label>
-            <label><input type="radio" name="q3" value="Todo dia" /> Todo dia</label>
-          </div>
-        </div>
-
-        <button type="button" onclick="enviarPesquisa()">Confirmar Respostas</button>
-      </form>
-
-      <div id="resultado"></div>
+  <div class="card">
+    <div class="header">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify Logo">
+      <span>R$ 100,00</span>
     </div>
+
+    <img class="profile-img" src="https://i1.sndcdn.com/artworks-yWyLi84UGUcJ1pBb-e8rTjw-t500x500.jpg" alt="Matuê">
+
+    <div class="reward-box">
+      <img src="https://cdn-icons-png.flaticon.com/512/138/138292.png" width="40" alt="moeda">
+      <p>Você recebeu:</p>
+      <h2>R$ 33,00</h2>
+    </div>
+
+    <div class="question">
+      Qual faixa etária mais escuta o Matuê?
+    </div>
+
+    <div class="buttons">
+      <button class="btn-under-18">-18 anos</button>
+      <button class="btn-over-18">+18 anos</button>
+    </div>
+
+    <button class="submit-btn">ENVIAR E GANHAR</button>
   </div>
-
-  <div class="banner rodape">SpotifyPesquisa</div>
-
-  <script>
-    function enviarPesquisa() {
-      const form = document.getElementById('pesquisaForm');
-      const resultado = document.getElementById('resultado');
-
-      // Verifica se todas as perguntas foram respondidas
-      const q1 = form.q1.value;
-      const q2 = form.q2.value;
-      const q3 = form.q3.value;
-
-      if (!q1 || !q2 || !q3) {
-        resultado.style.color = "red";
-        resultado.textContent = "Por favor, responda todas as perguntas antes de confirmar.";
-        return;
-      }
-
-      resultado.style.color = "#1DB954";
-      resultado.innerHTML = `
-        Respostas confirmadas!<br />
-        Recomendaria Matue para um parente? <b>${q1}</b><br />
-        Quanto você gosta do Matue? <b>${q2}</b><br />
-        Frequência que escuta Matue: <b>${q3}</b>
-      `;
-    }
-  </script>
 
 </body>
 </html>
