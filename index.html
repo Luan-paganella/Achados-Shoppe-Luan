@@ -51,6 +51,7 @@
     .question {
       margin-bottom: 10px;
       font-weight: bold;
+      font-size: 18px;
     }
     .buttons {
       margin-bottom: 20px;
@@ -63,15 +64,14 @@
       font-weight: bold;
       color: white;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-    .btn-under-18 {
-      background-color: #2ecc71;
-    }
-    .btn-over-18 {
-      background-color: #95a5a6;
-    }
+    .btn-1 { background-color: #27ae60; }
+    .btn-2 { background-color: #2980b9; }
+    .btn-3 { background-color: #8e44ad; }
+
     .submit-btn {
-      background-color: green;
+      background-color: #27ae60;
       color: white;
       padding: 12px 20px;
       border: none;
@@ -79,11 +79,11 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
     }
-    .notification {
-      margin-top: 15px;
-      font-weight: bold;
-      color: #1DB954;
+    .submit-btn:hover {
+      background-color: #1e8449;
     }
   </style>
 </head>
@@ -92,157 +92,120 @@
   <div class="card">
     <div class="header">
       <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify Logo" />
-      <span id="total-reward">R$ 0,00</span>
+      <span id="rewardValue">R$ 492,00</span>
     </div>
 
-    <img id="artist-img" class="profile-img" src="https://i1.sndcdn.com/artworks-yWyLi84UGUcJ1pBb-e8rTjw-t500x500.jpg" alt="Matuê" />
+    <img class="profile-img" src="https://i.imgur.com/NlX46dN.jpg" alt="Matuê" />
 
-    <div class="reward-box" id="reward-box" style="display:none;">
-      Você recebeu: <span id="reward-value">R$ 0,00</span>
-    </div>
+    <div id="rewardBox" class="reward-box">Você recebeu: R$ 492,00</div>
 
-    <div class="question" id="question-text">
-      Qual faixa etária você acha que mais escuta o cantor Matuê?
-    </div>
+    <div id="questionContainer" class="question">Carregando pergunta...</div>
 
-    <div class="buttons" id="buttons-container">
-      <button class="btn-under-18" data-value="-18">-18 anos</button>
-      <button class="btn-over-18" data-value="+18">+18 anos</button>
-    </div>
+    <div id="buttonsContainer" class="buttons"></div>
 
-    <button class="submit-btn" id="submit-btn" disabled>Enviar respostas</button>
-
-    <div class="notification" id="notification"></div>
+    <button id="submitBtn" class="submit-btn">Enviar respostas e ganhar</button>
   </div>
 
 <script>
-  // Perguntas do quiz
   const questions = [
     {
-      artist: "Matuê",
-      image: "https://i1.sndcdn.com/artworks-yWyLi84UGUcJ1pBb-e8rTjw-t500x500.jpg",
-      question: "Qual faixa etária você acha que mais escuta o cantor Matuê?",
-      options: [
-        { label: "-18 anos", value: "-18" },
-        { label: "+18 anos", value: "+18" }
-      ]
+      text: "Qual faixa etária você acha que mais escuta o cantor Matuê?",
+      options: ["-18 anos", "+18 anos", "Não sei"]
     },
     {
-      artist: "Ludmilla",
-      image: "https://i.scdn.co/image/ab6761610000e5ebc50e732dc1835a4b492aeff7",
-      question: "Você recomenda Ludmilla para seus amigos?",
-      options: [
-        { label: "Sim", value: "sim" },
-        { label: "Não", value: "nao" },
-        { label: "Talvez", value: "talvez" }
-      ]
+      text: "Você recomendaria Matuê para algum parente?",
+      options: ["Sim", "Não", "Talvez"]
     },
     {
-      artist: "Anitta",
-      image: "https://i.scdn.co/image/ab6761610000e5ebc682982688c435efc32a152f",
-      question: "Com que frequência você escuta Anitta?",
-      options: [
-        { label: "Raramente", value: "raramente" },
-        { label: "De vez em quando", value: "devezemquando" },
-        { label: "Todo dia", value: "todoDia" }
-      ]
+      text: "De 0 a 10, quanto você gosta do Matuê?",
+      options: ["Pouco", "Mais ou Menos", "Muito"]
     },
     {
-      artist: "Djonga",
-      image: "https://i.scdn.co/image/ab6761610000e5eb05e08eae36d7d1036a6a7b57",
-      question: "Você gosta do estilo musical do Djonga?",
-      options: [
-        { label: "Pouco", value: "pouco" },
-        { label: "Mais ou Menos", value: "maisOuMenos" },
-        { label: "Muito", value: "muito" }
-      ]
+      text: "Você escuta Matuê diariamente?",
+      options: ["Raramente", "De vez em quando", "Todo dia"]
+    },
+    {
+      text: "Qual sua música favorita do Matuê?",
+      options: ["Kenny G", "Quer Voar", "Anos Luz"]
+    },
+    {
+      text: "Você já foi a algum show do Matuê?",
+      options: ["Sim, várias vezes", "Uma vez", "Nunca"]
+    },
+    {
+      text: "Como você classificaria o estilo do Matuê?",
+      options: ["Único", "Comum", "Não gosto muito"]
     }
   ];
 
-  let currentQuestionIndex = 0;
-  let totalReward = 0;
-  let selectedOption = null;
+  let currentQuestion = 0;
 
-  const artistImg = document.getElementById("artist-img");
-  const questionText = document.getElementById("question-text");
-  const buttonsContainer = document.getElementById("buttons-container");
-  const submitBtn = document.getElementById("submit-btn");
-  const rewardBox = document.getElementById("reward-box");
-  const rewardValue = document.getElementById("reward-value");
-  const totalRewardSpan = document.getElementById("total-reward");
-  const notification = document.getElementById("notification");
+  const questionContainer = document.getElementById("questionContainer");
+  const buttonsContainer = document.getElementById("buttonsContainer");
+  const submitBtn = document.getElementById("submitBtn");
+  const rewardBox = document.getElementById("rewardBox");
+  const rewardValueSpan = document.getElementById("rewardValue");
+
+  function getRandomReward() {
+    // Gera valor entre 492 e 498 com duas casas decimais (R$ 492,00 a R$ 498,00)
+    return (Math.floor(Math.random() * (498 - 492 + 1)) + 492).toFixed(2);
+  }
 
   function loadQuestion(index) {
-    selectedOption = null;
-    submitBtn.disabled = true;
-    notification.textContent = "";
-    rewardBox.style.display = "none";
-
     const q = questions[index];
-    artistImg.src = q.image;
-    questionText.textContent = q.question;
+    questionContainer.textContent = q.text;
+    buttonsContainer.innerHTML = "";
 
-    // Remove todos os botões
-    while (buttonsContainer.firstChild) {
-      buttonsContainer.removeChild(buttonsContainer.firstChild);
-    }
-    // Adiciona os botões das opções
-    q.options.forEach(opt => {
+    q.options.forEach((option, i) => {
       const btn = document.createElement("button");
-      btn.textContent = opt.label;
-      btn.className = "submit-btn"; // estilo igual ao botão enviar, só que menor?
-      btn.style.margin = "5px";
-      btn.style.padding = "10px 15px";
-      btn.style.fontWeight = "bold";
-      btn.style.borderRadius = "8px";
-      btn.style.border = "none";
-      btn.style.cursor = "pointer";
-      btn.style.backgroundColor = "#2ecc71";
-      btn.style.color = "white";
-      btn.dataset.value = opt.value;
-
-      btn.onclick = () => {
-        selectedOption = opt.value;
-        // Marca o botão selecionado
-        Array.from(buttonsContainer.children).forEach(b => b.style.opacity = 0.5);
-        btn.style.opacity = 1;
-        submitBtn.disabled = false;
-      };
+      btn.textContent = option;
+      btn.className = "btn-" + ((i % 3) + 1);
+      btn.onclick = () => selectOption(option, btn);
       buttonsContainer.appendChild(btn);
     });
+
+    selectedOption = null;
+  }
+
+  let selectedOption = null;
+
+  function selectOption(option, btn) {
+    selectedOption = option;
+    // Remove highlight de todos os botões
+    Array.from(buttonsContainer.children).forEach(b => {
+      b.style.opacity = "0.6";
+      b.style.fontWeight = "normal";
+    });
+    // Destaca o botão selecionado
+    btn.style.opacity = "1";
+    btn.style.fontWeight = "bold";
   }
 
   submitBtn.addEventListener("click", () => {
-    if (!selectedOption) return;
-
-    // Gera um valor aleatório entre 35 e 48
-    const reward = (Math.random() * (48 - 35) + 35).toFixed(2);
-    totalReward += parseFloat(reward);
-
-    rewardValue.textContent = `R$ ${reward}`;
-    rewardBox.style.display = "block";
-
-    totalRewardSpan.textContent = `R$ ${totalReward.toFixed(2)}`;
-
-    notification.textContent = `Você ganhou R$ ${reward} por responder!`;
-
-    currentQuestionIndex++;
-
-    if (currentQuestionIndex >= questions.length) {
-      // Fim das perguntas
-      questionText.textContent = "Obrigado por participar da pesquisa!";
-      buttonsContainer.style.display = "none";
-      submitBtn.style.display = "none";
-      artistImg.style.display = "none";
-      notification.textContent = `Você ganhou um total de R$ ${totalReward.toFixed(2)}!`;
-    } else {
-      setTimeout(() => {
-        loadQuestion(currentQuestionIndex);
-      }, 1500);
+    if (!selectedOption) {
+      alert("Por favor, selecione uma opção antes de continuar.");
+      return;
     }
+    
+    // Gera o valor de recompensa e atualiza a exibição
+    const valor = getRandomReward();
+    rewardBox.textContent = `Você recebeu: R$ ${valor}`;
+    rewardValueSpan.textContent = `R$ ${valor}`;
+
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      loadQuestion(currentQuestion);
+    } else {
+      // Acabaram as perguntas
+      questionContainer.textContent = "Obrigado por participar da pesquisa!";
+      buttonsContainer.innerHTML = "";
+      submitBtn.style.display = "none";
+    }
+    selectedOption = null;
   });
 
-  loadQuestion(currentQuestionIndex);
+  // Carrega a primeira pergunta inicialmente
+  loadQuestion(currentQuestion);
 </script>
 
 </body>
