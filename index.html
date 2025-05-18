@@ -5,129 +5,160 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SpotifyPesquisa</title>
   <style>
-    body, html {
-      margin: 0; padding: 0;
-      height: 100%;
+    body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background-color: white;
-      color: black;
+      background-color: #f2f2f2;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      min-height: 100vh;
+      text-align: center;
+      padding: 0;
     }
     .banner {
       background-color: #1DB954;
       color: white;
       font-weight: bold;
       font-size: 1.8em;
-      height: 33.33vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      height: 12vh;
       user-select: none;
-      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
-    .banner.roda-pe {
-      height: 33.33vh;
-    }
-    .total-gain {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 1.2em;
-      font-weight: bold;
-      color: white;
-      user-select: none;
+    .banner span.total {
+      margin-left: 20px;
+      font-size: 1em;
+      font-weight: normal;
+      background: rgba(255 255 255 / 0.2);
+      padding: 6px 15px;
+      border-radius: 20px;
+      min-width: 100px;
+      text-align: center;
     }
     .content {
       flex-grow: 1;
-      overflow-y: auto;
-      padding: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
     }
     .card {
-      background: white;
+      background-color: white;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       width: 320px;
       padding: 20px;
       text-align: center;
-      position: relative;
     }
-    #questionImage {
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .header img.logo {
+      height: 24px;
+    }
+    .profile-img {
       width: 120px;
-      height: 120px;
-      border-radius: 12px;
-      object-fit: cover;
-      margin: 0 auto 20px;
+      border-radius: 10px;
+      margin: 15px auto 25px;
       display: block;
-      box-shadow: 0 0 8px rgba(0,0,0,0.15);
+      object-fit: cover;
+      height: 120px;
     }
-    #questionContainer {
-      font-weight: bold;
+    .reward-box {
+      background-color: #fffbe6;
+      border: 2px solid #ffd700;
+      border-radius: 12px;
+      padding: 15px;
       margin-bottom: 20px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: bold;
+      color: green;
+    }
+    .reward-box img {
+      width: 30px;
+      height: 30px;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 15px;
+      min-height: 48px;
       font-size: 1.1em;
     }
+    .buttons {
+      margin-bottom: 25px;
+    }
     .buttons button {
-      background-color: #1DB954;
+      padding: 10px 20px;
+      margin: 6px;
       border: none;
       border-radius: 8px;
-      color: white;
       font-weight: bold;
-      padding: 10px 15px;
-      margin: 6px 8px 12px 8px;
+      color: white;
       cursor: pointer;
-      font-size: 1em;
-      width: 80px;
-      transition: background-color 0.2s ease;
+      font-size: 0.9em;
+      transition: background-color 0.3s;
+      min-width: 85px;
     }
-    .buttons button:hover {
-      background-color: #14833b;
+    .btn-under-18 {
+      background-color: #2ecc71;
     }
-    #submitBtn {
-      background-color: #1DB954;
+    .btn-over-18 {
+      background-color: #27ae60;
+    }
+    .btn-maybe {
+      background-color: #f39c12;
+    }
+    .submit-btn {
+      background-color: green;
       color: white;
       padding: 12px 20px;
       border: none;
       border-radius: 8px;
-      font-size: 1.1em;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 10px;
       width: 100%;
-      transition: background-color 0.3s ease;
     }
-    #submitBtn:hover {
-      background-color: #14833b;
+    .submit-btn:disabled {
+      background-color: #7fbc87;
+      cursor: default;
     }
-    #notification {
-      margin-top: 20px;
-      font-weight: bold;
-      font-size: 1.1em;
-      color: #1DB954;
-      min-height: 24px;
+    .banner.rodape {
+      height: 12vh;
+      line-height: 12vh;
+      font-size: 1.5em;
+      user-select: none;
     }
+
+    /* Mobile responsiveness */
     @media (max-width: 400px) {
       .card {
         width: 90vw;
         padding: 15px;
       }
-      #questionImage {
-        width: 100px;
-        height: 100px;
-      }
       .buttons button {
-        width: 70px;
-        font-size: 0.9em;
-        padding: 8px 10px;
+        min-width: 70px;
+        font-size: 0.85em;
+        padding: 8px 14px;
+        margin: 4px;
       }
-      #submitBtn {
-        font-size: 1em;
+      .submit-btn {
+        font-size: 14px;
+        padding: 10px 15px;
       }
       .banner {
-        font-size: 1.4em;
+        font-size: 1.5em;
       }
     }
   </style>
@@ -136,144 +167,108 @@
 
   <div class="banner topo">
     Spotify
-    <div class="total-gain" id="totalGainDisplay">Total: R$ 0</div>
+    <span class="total" id="totalGanhos">Total: R$ 0,00</span>
   </div>
 
   <div class="content">
     <div class="card">
-      <img id="questionImage" src="" alt="Foto do artista" />
-      <div id="questionContainer"></div>
-      <div class="buttons" id="buttonsContainer"></div>
-      <button id="submitBtn">Enviar respostas e ganhar</button>
-      <div id="notification"></div>
+      <div class="header">
+        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify Logo" />
+        <span id="perguntaIndex">Pergunta 1/7</span>
+      </div>
+
+      <img class="profile-img" id="artistImg" src="" alt="Imagem do artista" />
+
+      <div class="reward-box" id="rewardBox">
+        <img src="https://cdn-icons-png.flaticon.com/512/138/138292.png" alt="Moedas" />
+        <p>Você ganhou:</p>
+        <h2 id="valorGanhos">R$ 0,00</h2>
+      </div>
+
+      <div class="question" id="questionText"></div>
+
+      <div class="buttons" id="buttonsArea"></div>
+
+      <button class="submit-btn" id="submitBtn" disabled>Enviar respostas</button>
     </div>
   </div>
 
-  <div class="banner roda-pe">Spotify</div>
+  <div class="banner rodape">Spotify</div>
 
-<script>
-  const questions = [
-    {
-      artist: "Matuê",
-      image: "https://i.imgur.com/NlX46dN.jpg",
-      text: "Qual faixa etária você acha que mais escuta o cantor Matuê?",
-      options: ["-18 anos", "+18 anos", "Não sei"]
-    },
-    {
-      artist: "Ludmilla",
-      image: "https://i.imgur.com/QdEjF8d.jpg",
-      text: "Você recomendaria Ludmilla para algum parente?",
-      options: ["Sim", "Não", "Talvez"]
-    },
-    {
-      artist: "Anitta",
-      image: "https://i.imgur.com/IS3cN2I.jpg",
-      text: "De 0 a 10, quanto você gosta da Anitta?",
-      options: ["Pouco", "Mais ou Menos", "Muito"]
-    },
-    {
-      artist: "Jão",
-      image: "https://i.imgur.com/vjHZ8Xd.jpg",
-      text: "Você escuta Jão diariamente?",
-      options: ["Raramente", "De vez em quando", "Todo dia"]
-    },
-    {
-      artist: "IZA",
-      image: "https://i.imgur.com/KgfpQJi.jpg",
-      text: "Qual sua música favorita da IZA?",
-      options: ["Pesadão", "Dona de Mim", "Ginga"]
-    },
-    {
-      artist: "Djonga",
-      image: "https://i.imgur.com/Nsn0zLx.jpg",
-      text: "Você considera Djonga um artista influente?",
-      options: ["Sim", "Não", "Talvez"]
-    },
-    {
-      artist: "Pabllo Vittar",
-      image: "https://i.imgur.com/vv2zEaO.jpg",
-      text: "Você recomenda Pabllo Vittar para amigos?",
-      options: ["Sim", "Não", "Talvez"]
-    }
-  ];
-
-  let currentQuestionIndex = 0;
-  let totalGain = 0;
-
-  const questionImage = document.getElementById("questionImage");
-  const questionContainer = document.getElementById("questionContainer");
-  const buttonsContainer = document.getElementById("buttonsContainer");
-  const submitBtn = document.getElementById("submitBtn");
-  const notification = document.getElementById("notification");
-  const totalGainDisplay = document.getElementById("totalGainDisplay");
-
-  function getRandomGain() {
-    // Para que o total fique entre 321 e 367, e 7 perguntas,
-    // faz um ganho entre ~45 e ~53 por resposta:
-    return Math.floor(Math.random() * (53 - 45 + 1)) + 45;
-  }
-
-  function loadQuestion(index) {
-    const q = questions[index];
-    questionImage.src = q.image;
-    questionContainer.textContent = `${index + 1}. ${q.text}`;
-    buttonsContainer.innerHTML = "";
-    notification.textContent = "";
-    submitBtn.disabled = true;
-
-    q.options.forEach(option => {
-      const btn = document.createElement("button");
-      btn.textContent = option;
-      btn.addEventListener("click", () => {
-        // Remove seleção anterior
-        [...buttonsContainer.children].forEach(b => b.style.backgroundColor = "#1DB954");
-        btn.style.backgroundColor = "#14833b";
-        submitBtn.disabled = false;
-        submitBtn.dataset.selected = option;
-      });
-      buttonsContainer.appendChild(btn);
-    });
-  }
-
-  submitBtn.addEventListener("click", () => {
-    if (!submitBtn.dataset.selected) {
-      notification.style.color = "red";
-      notification.textContent = "Por favor, selecione uma opção antes de continuar.";
-      return;
-    }
-
-    const gain = getRandomGain();
-    totalGain += gain;
-    // limitar totalGain entre 321 e 367:
-    if(totalGain > 367) totalGain = 367;
-    if(totalGain < 321) totalGain = 321;
-
-    totalGainDisplay.textContent = `Total: R$ ${totalGain}`;
-    notification.style.color = "#1DB954";
-    notification.textContent = `Você ganhou R$ ${gain} por essa resposta!`;
-
-    currentQuestionIndex++;
-
-    if (currentQuestionIndex < questions.length) {
-      setTimeout(() => {
-        loadQuestion(currentQuestionIndex);
-      }, 1500);
-    } else {
-      setTimeout(() => {
-        notification.textContent = `Pesquisa finalizada! Total ganho: R$ ${totalGain}`;
-        buttonsContainer.innerHTML = "";
-        submitBtn.style.display = "none";
-        questionImage.style.display = "none";
-        questionContainer.textContent = "Obrigado por participar da pesquisa!";
-      }, 1500);
-    }
-
-    submitBtn.dataset.selected = null;
-    submitBtn.disabled = true;
-  });
-
-  loadQuestion(currentQuestionIndex);
-</script>
-
-</body>
-</html>
+  <script>
+    const perguntas = [
+      {
+        artista: "Matuê",
+        img: "https://i.pinimg.com/originals/2c/b1/d0/2cb1d0dff5e2d7d9cbe06ca9e1c5a3a5.jpg",
+        perguntas: [
+          {
+            texto: "Recomendaria Matuê para algum parente?",
+            opcoes: ["Sim", "Não", "Talvez"]
+          },
+          {
+            texto: "Qual faixa etária você acha que mais escuta o cantor Matuê?",
+            opcoes: ["-18 anos", "+18 anos", "Todas as idades"]
+          },
+          {
+            texto: "Você escuta Matuê diariamente?",
+            opcoes: ["Raramente", "De vez em quando", "Todo dia"]
+          }
+        ]
+      },
+      {
+        artista: "MC IG",
+        img: "https://i.pinimg.com/originals/55/59/bb/5559bb92991c0b2baf684f6b4f7d42a4.jpg",
+        perguntas: [
+          {
+            texto: "Recomendaria MC IG para algum parente?",
+            opcoes: ["Sim", "Não", "Talvez"]
+          },
+          {
+            texto: "Qual faixa etária você acha que mais escuta MC IG?",
+            opcoes: ["-18 anos", "+18 anos", "Todas as idades"]
+          },
+          {
+            texto: "Você escuta MC IG diariamente?",
+            opcoes: ["Raramente", "De vez em quando", "Todo dia"]
+          }
+        ]
+      },
+      {
+        artista: "MC Kevinho",
+        img: "https://i.pinimg.com/originals/6a/eb/fd/6aebfd72ed5907c0630e382e29a9db79.jpg",
+        perguntas: [
+          {
+            texto: "Recomendaria MC Kevinho para algum parente?",
+            opcoes: ["Sim", "Não", "Talvez"]
+          },
+          {
+            texto: "Qual faixa etária você acha que mais escuta MC Kevinho?",
+            opcoes: ["-18 anos", "+18 anos", "Todas as idades"]
+          },
+          {
+            texto: "Você escuta MC Kevinho diariamente?",
+            opcoes: ["Raramente", "De vez em quando", "Todo dia"]
+          }
+        ]
+      },
+      {
+        artista: "Luan Santana",
+        img: "https://i.pinimg.com/originals/c1/3b/19/c13b191ee270ffb1e6b22b20a8a6b6a9.jpg",
+        perguntas: [
+          {
+            texto: "Recomendaria Luan Santana para algum parente?",
+            opcoes: ["Sim", "Não", "Talvez"]
+          },
+          {
+            texto: "Qual faixa etária você acha que mais escuta Luan Santana?",
+            opcoes: ["-18 anos", "+18 anos", "Todas as idades"]
+          },
+          {
+            texto: "Você escuta Luan Santana diariamente?",
+            opcoes: ["Raramente", "De vez em quando", "Todo dia"]
+          }
+        ]
+      },
+      {
+        artista: "Ludmilla",
+        img: "https://i.pinimg.com/originals/63/fb/59/63fb59210a523b8
