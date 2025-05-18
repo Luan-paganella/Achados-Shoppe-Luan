@@ -2,109 +2,204 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pesquisa Spotify</title>
   <style>
-    body {
-      background-color: #f2f2f2;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 40px;
+    /* Reset básico */
+    * {
+      box-sizing: border-box;
     }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Banner topo e rodapé */
+    .banner {
+      background-color: #1DB954;
+      color: white;
+      font-weight: bold;
+      font-size: 1.8rem;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    /* Área principal com scroll */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Card da pesquisa */
     .card {
       background-color: white;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 320px;
-      margin: auto;
+      width: 100%;
+      max-width: 360px;
       padding: 20px;
+      text-align: center;
     }
+
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 15px;
     }
+
     .header img {
       height: 24px;
     }
+
     .header span {
       background-color: green;
       color: white;
       padding: 4px 12px;
       border-radius: 20px;
       font-weight: bold;
+      font-size: 1rem;
     }
+
     .profile-img {
       width: 120px;
+      height: 120px;
+      object-fit: cover;
       border-radius: 10px;
-      margin: 20px 0;
+      margin: 15px auto;
+      display: block;
     }
+
     .reward-box {
       background-color: #fffbe6;
       border: 2px solid #ffd700;
       border-radius: 12px;
-      padding: 20px;
+      padding: 15px;
       margin-bottom: 20px;
-      font-size: 18px;
+      font-size: 1.1rem;
       color: green;
       font-weight: bold;
     }
+
     .question {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       font-weight: bold;
-      font-size: 18px;
+      font-size: 1.1rem;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+
     .buttons {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
+
     .buttons button {
-      padding: 10px 20px;
-      margin: 5px;
+      flex: 1 1 30%;
+      padding: 10px 0;
       border: none;
       border-radius: 8px;
       font-weight: bold;
       color: white;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      font-size: 1rem;
+      user-select: none;
+      min-width: 90px;
     }
+
     .btn-1 { background-color: #27ae60; }
     .btn-2 { background-color: #2980b9; }
     .btn-3 { background-color: #8e44ad; }
 
+    .buttons button.selected {
+      box-shadow: 0 0 8px 3px #4caf50;
+      font-weight: bolder;
+      opacity: 1;
+    }
+
     .submit-btn {
       background-color: #27ae60;
       color: white;
-      padding: 12px 20px;
+      padding: 14px 0;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 1.1rem;
       font-weight: bold;
       cursor: pointer;
       width: 100%;
+      user-select: none;
       transition: background-color 0.3s ease;
     }
+
     .submit-btn:hover {
       background-color: #1e8449;
+    }
+
+    /* Scrollbar estilo básico */
+    .main-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    .main-content::-webkit-scrollbar-thumb {
+      background-color: rgba(29, 185, 84, 0.5);
+      border-radius: 4px;
+    }
+
+    @media (max-width: 400px) {
+      .card {
+        padding: 15px;
+      }
+      .buttons button {
+        font-size: 0.9rem;
+        min-width: 80px;
+      }
+      .reward-box {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <div class="header">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify Logo" />
-      <span id="rewardValue">R$ 492,00</span>
+  <div class="banner">Spotify</div>
+
+  <div class="main-content">
+    <div class="card">
+      <div class="header">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify Logo" />
+        <span id="rewardValue">R$ 492,00</span>
+      </div>
+
+      <img class="profile-img" src="https://i.imgur.com/NlX46dN.jpg" alt="Matuê" />
+
+      <div id="rewardBox" class="reward-box">Você recebeu: R$ 492,00</div>
+
+      <div id="questionContainer" class="question">Carregando pergunta...</div>
+
+      <div id="buttonsContainer" class="buttons"></div>
+
+      <button id="submitBtn" class="submit-btn">Enviar respostas e ganhar</button>
     </div>
-
-    <img class="profile-img" src="https://i.imgur.com/NlX46dN.jpg" alt="Matuê" />
-
-    <div id="rewardBox" class="reward-box">Você recebeu: R$ 492,00</div>
-
-    <div id="questionContainer" class="question">Carregando pergunta...</div>
-
-    <div id="buttonsContainer" class="buttons"></div>
-
-    <button id="submitBtn" class="submit-btn">Enviar respostas e ganhar</button>
   </div>
+
+  <div class="banner">Spotify</div>
 
 <script>
   const questions = [
@@ -139,6 +234,7 @@
   ];
 
   let currentQuestion = 0;
+  let selectedOption = null;
 
   const questionContainer = document.getElementById("questionContainer");
   const buttonsContainer = document.getElementById("buttonsContainer");
@@ -147,7 +243,6 @@
   const rewardValueSpan = document.getElementById("rewardValue");
 
   function getRandomReward() {
-    // Gera valor entre 492 e 498 com duas casas decimais (R$ 492,00 a R$ 498,00)
     return (Math.floor(Math.random() * (498 - 492 + 1)) + 492).toFixed(2);
   }
 
@@ -155,6 +250,7 @@
     const q = questions[index];
     questionContainer.textContent = q.text;
     buttonsContainer.innerHTML = "";
+    selectedOption = null;
 
     q.options.forEach((option, i) => {
       const btn = document.createElement("button");
@@ -163,22 +259,12 @@
       btn.onclick = () => selectOption(option, btn);
       buttonsContainer.appendChild(btn);
     });
-
-    selectedOption = null;
   }
-
-  let selectedOption = null;
 
   function selectOption(option, btn) {
     selectedOption = option;
-    // Remove highlight de todos os botões
-    Array.from(buttonsContainer.children).forEach(b => {
-      b.style.opacity = "0.6";
-      b.style.fontWeight = "normal";
-    });
-    // Destaca o botão selecionado
-    btn.style.opacity = "1";
-    btn.style.fontWeight = "bold";
+    Array.from(buttonsContainer.children).forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
   }
 
   submitBtn.addEventListener("click", () => {
@@ -186,8 +272,7 @@
       alert("Por favor, selecione uma opção antes de continuar.");
       return;
     }
-    
-    // Gera o valor de recompensa e atualiza a exibição
+
     const valor = getRandomReward();
     rewardBox.textContent = `Você recebeu: R$ ${valor}`;
     rewardValueSpan.textContent = `R$ ${valor}`;
@@ -196,7 +281,6 @@
     if (currentQuestion < questions.length) {
       loadQuestion(currentQuestion);
     } else {
-      // Acabaram as perguntas
       questionContainer.textContent = "Obrigado por participar da pesquisa!";
       buttonsContainer.innerHTML = "";
       submitBtn.style.display = "none";
@@ -204,7 +288,7 @@
     selectedOption = null;
   });
 
-  // Carrega a primeira pergunta inicialmente
+  // Inicia com a primeira pergunta
   loadQuestion(currentQuestion);
 </script>
 
