@@ -10,9 +10,10 @@
       font-family: Arial, sans-serif;
       background-color: #ffffff;
       color: #000000;
-      padding-top: 80px;
+      padding-top: 80px; /* espaço para o banner fixo */
     }
 
+    /* Banner verde fixo no topo */
     .banner {
       position: fixed;
       top: 0;
@@ -27,6 +28,7 @@
       z-index: 1000;
     }
 
+    /* Container centralizado */
     .container {
       display: flex;
       flex-direction: column;
@@ -36,6 +38,7 @@
       padding: 30px 20px;
     }
 
+    /* Campo de texto */
     .text-input {
       width: 100%;
       max-width: 500px;
@@ -47,6 +50,7 @@
       box-sizing: border-box;
     }
 
+    /* Opções (radio buttons) */
     .options {
       display: flex;
       flex-direction: column;
@@ -60,6 +64,7 @@
       cursor: pointer;
     }
 
+    /* Botão de confirmação */
     .confirm-button {
       padding: 12px 24px;
       font-size: 1em;
@@ -75,6 +80,7 @@
       background-color: #333;
     }
 
+    /* Resultado exibido */
     .result {
       margin-top: 30px;
       font-size: 1.1em;
@@ -84,11 +90,15 @@
 </head>
 <body>
 
+  <!-- Banner fixo -->
   <div class="banner">TikTokPesquisa</div>
 
+  <!-- Conteúdo principal -->
   <div class="container">
+    <!-- Campo de texto -->
     <input type="text" class="text-input" id="textoDigitado" placeholder="Digite algo aqui...">
 
+    <!-- Opções de múltipla escolha -->
     <div class="options">
       <label class="option-label">
         <input type="radio" name="opcao" value="Opção 1"> Opção 1
@@ -101,18 +111,21 @@
       </label>
     </div>
 
+    <!-- Botão -->
     <button class="confirm-button" onclick="confirmarEscolha()">Confirmar Escolha</button>
 
+    <!-- Resultado -->
     <div class="result" id="resultado"></div>
   </div>
 
+  <!-- Script para interação -->
   <script>
     function confirmarEscolha() {
-      const texto = document.getElementById('textoDigitado').value;
+      const texto = document.getElementById('textoDigitado').value.trim();
       const opcaoSelecionada = document.querySelector('input[name="opcao"]:checked');
       const resultado = document.getElementById('resultado');
 
-      if (!texto.trim()) {
+      if (!texto) {
         resultado.innerText = "Por favor, digite algo.";
         return;
       }
