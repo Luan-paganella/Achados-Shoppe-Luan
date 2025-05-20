@@ -1,218 +1,275 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pesquisa Spotify</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      margin: 0;
       background-color: #f2f2f2;
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       text-align: center;
+      margin: 0;
+      padding: 0;
     }
-
-    .top-banner, .bottom-banner {
-      background-color: #1db954;
+    header, footer {
+      background-color: #2ecc71;
       color: white;
-      padding: 12px;
       font-weight: bold;
+      font-size: 24px;
+      padding: 12px 0;
+      user-select: none;
     }
-
-    .card {
-      background-color: white;
+    .container {
+      max-width: 360px;
+      margin: 30px auto;
+      background: white;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 90%;
-      max-width: 360px;
-      margin: 20px auto;
       padding: 20px;
-      transition: all 0.3s ease;
     }
-
-    .header {
+    .header-inner {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-
-    .header img {
+    .header-inner img {
       height: 24px;
     }
-
-    .header span {
+    .header-inner .total {
       background-color: green;
       color: white;
-      padding: 6px 14px;
+      padding: 4px 12px;
       border-radius: 20px;
       font-weight: bold;
     }
-
     .profile-img {
       width: 120px;
       border-radius: 10px;
-      margin: 20px 0;
+      margin: 20px auto;
+      display: block;
+      object-fit: cover;
     }
-
     .reward-box {
-      display: none;
       background-color: #fffbe6;
       border: 2px solid #ffd700;
       border-radius: 12px;
-      padding: 10px;
-      margin-bottom: 20px;
-    }
-
-    .reward-box h2 {
-      color: green;
-      margin: 10px 0 0;
-    }
-
-    .question {
-      margin: 20px 0 10px;
+      padding: 20px;
+      margin: 15px 0 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       font-weight: bold;
-      font-size: 17px;
+      font-size: 18px;
+      color: green;
     }
-
+    .reward-box img {
+      width: 40px;
+    }
+    .question {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
     .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
       margin-bottom: 20px;
     }
-
     .buttons button {
-      padding: 12px 20px;
-      margin: 6px;
+      flex: 1;
+      padding: 12px 0;
       border: none;
       border-radius: 8px;
       font-weight: bold;
-      font-size: 15px;
+      font-size: 16px;
       color: white;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-
-    .btn-option {
-      background-color: #1db954;
+    .btn-under-18 {
+      background-color: #2ecc71;
     }
-
+    .btn-under-18:hover {
+      background-color: #27ae60;
+    }
+    .btn-over-18 {
+      background-color: #95a5a6;
+    }
+    .btn-over-18:hover {
+      background-color: #7f8c8d;
+    }
     .submit-btn {
       background-color: green;
       color: white;
-      padding: 12px 20px;
+      padding: 14px 0;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
       width: 100%;
+      transition: background-color 0.3s ease;
+    }
+    .submit-btn:hover {
+      background-color: #145214;
+    }
+    @media (max-width: 400px) {
+      .container {
+        margin: 15px;
+        width: auto;
+      }
+      .buttons {
+        flex-direction: column;
+      }
+      .buttons button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="top-banner">Spotify</div>
-
-  <div class="card">
-    <div class="header">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg">
-      <span id="total-ganho">R$ 0,00</span>
+  <header>Spotify</header>
+  <div class="container">
+    <div class="header-inner">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify Logo" />
+      <div class="total" id="total">R$ 0,00</div>
     </div>
-
-    <img id="artist-img" class="profile-img" src="" alt="Artista">
-
-    <div class="reward-box" id="recompensa-box">
-      <p>Você recebeu:</p>
-      <h2 id="ganho-valor">R$ 0,00</h2>
+    <img class="profile-img" id="artist-img" src="" alt="Imagem do artista" />
+    <div class="reward-box" id="reward-box" style="visibility: hidden;">
+      <img src="https://cdn-icons-png.flaticon.com/512/138/138292.png" alt="Moedas" />
+      Você recebeu: <span id="reward-amount">R$ 0,00</span>
     </div>
-
-    <div class="question" id="pergunta-texto"></div>
-
+    <div class="question" id="question-text"></div>
     <div class="buttons">
-      <button class="btn-option">-18 anos</button>
-      <button class="btn-option">+18 anos</button>
+      <button class="btn-under-18" id="btn-under-18">-18 anos</button>
+      <button class="btn-over-18" id="btn-over-18">+18 anos</button>
     </div>
-
-    <button class="submit-btn" onclick="proximaPergunta()">Enviar respostas</button>
+    <button class="submit-btn" id="submit-btn">Enviar respostas</button>
   </div>
+  <footer>© Pesquisa Spotify</footer>
 
-  <div class="bottom-banner">© 2025 Pesquisa Spotify</div>
-
-  <script>
-    const perguntas = [
-      {
-        artista: "Matuê",
-        pergunta: "Qual faixa etária você acha que mais escuta o cantor Matuê?",
-        imagem: "https://via.placeholder.com/120x120.png?text=Matue"
-      },
-      {
-        artista: "MC IG",
-        pergunta: "Qual grupo mais curte as músicas do MC IG?",
-        imagem: "https://via.placeholder.com/120x120.png?text=MC+IG"
-      },
-      {
-        artista: "MC Kevinho",
-        pergunta: "Quem você acha que mais escuta o MC Kevinho?",
-        imagem: "https://via.placeholder.com/120x120.png?text=Kevinho"
-      },
-      {
-        artista: "Luan Santana",
-        pergunta: "Qual idade mais consome Luan Santana?",
-        imagem: "https://via.placeholder.com/120x120.png?text=Luan"
-      },
-      {
-        artista: "Ludmilla",
-        pergunta: "Qual o público principal da Ludmilla?",
-        imagem: "https://via.placeholder.com/120x120.png?text=Ludmilla"
-      },
-      {
-        artista: "Roberto Carlos",
-        pergunta: "Quem mais escuta Roberto Carlos atualmente?",
-        imagem: "https://via.placeholder.com/120x120.png?text=Roberto"
-      },
-      {
-        artista: "Ana Castela",
-        pergunta: "Qual público curte Ana Castela?",
-        imagem: "https://via.placeholder.com/120x120.png?text=Ana"
-      }
-    ];
-
-    const ganhos = [49, 53, 47, 43, 50, 37, 53];
-    let perguntaAtual = 0;
-    let total = 0;
-
-    function exibirPergunta() {
-      document.getElementById("recompensa-box").style.display = "none";
-      const p = perguntas[perguntaAtual];
-      document.getElementById("pergunta-texto").innerText = p.pergunta;
-      document.getElementById("artist-img").src = p.imagem;
+<script>
+  const questions = [
+    {
+      artist: "Matuê",
+      image: "https://i.pinimg.com/564x/2y/5t/gc/2y5TgcPiV.jpg",
+      question: "Qual faixa etária você acha que mais escuta o cantor Matuê?"
+    },
+    {
+      artist: "MC IG",
+      image: "https://i.pinimg.com/564x/5y/h8/ju/5yh8juniL.jpg",
+      question: "Qual faixa etária você acha que mais escuta o cantor MC IG?"
+    },
+    {
+      artist: "MC Kevinho",
+      image: "https://i.pinimg.com/564x/7x/jp/yi/7xJPYIpVi.jpg",
+      question: "Qual faixa etária você acha que mais escuta o cantor MC Kevinho?"
+    },
+    {
+      artist: "Luan Santana",
+      image: "https://i.pinimg.com/564x/2s/wp/or/2sWporwEn.jpg",
+      question: "Qual faixa etária você acha que mais escuta o cantor Luan Santana?"
+    },
+    {
+      artist: "Ludmilla",
+      image: "https://i.pinimg.com/564x/1m/ef/zu/1mefzUvrF.jpg",
+      question: "Qual faixa etária você acha que mais escuta a cantora Ludmilla?"
+    },
+    {
+      artist: "Roberto Carlos",
+      image: "https://i.pinimg.com/564x/3i/xa/kO/3ixakOQTo.jpg",
+      question: "Qual faixa etária você acha que mais escuta o cantor Roberto Carlos?"
+    },
+    {
+      artist: "Ana Castela",
+      image: "https://i.pinimg.com/564x/6u/d7/ih/6Ud7ihUak.jpg",
+      question: "Qual faixa etária você acha que mais escuta a cantora Ana Castela?"
     }
+  ];
 
-    function proximaPergunta() {
-      if (perguntaAtual < perguntas.length) {
-        const ganho = ganhos[perguntaAtual];
-        total += ganho;
-        document.getElementById("ganho-valor").innerText = `R$ ${ganho},00`;
-        document.getElementById("total-ganho").innerText = `R$ ${total},00`;
-        document.getElementById("recompensa-box").style.display = "block";
-        perguntaAtual++;
-        setTimeout(() => {
-          if (perguntaAtual < perguntas.length) {
-            exibirPergunta();
-          } else {
-            document.querySelector(".question").innerText = "Obrigado por participar!";
-            document.getElementById("artist-img").style.display = "none";
-            document.querySelector(".buttons").style.display = "none";
-            document.querySelector(".submit-btn").style.display = "none";
-          }
-        }, 1500);
-      }
+  const btnUnder18 = document.getElementById('btn-under-18');
+  const btnOver18 = document.getElementById('btn-over-18');
+  const submitBtn = document.getElementById('submit-btn');
+  const questionText = document.getElementById('question-text');
+  const artistImg = document.getElementById('artist-img');
+  const totalDisplay = document.getElementById('total');
+  const rewardBox = document.getElementById('reward-box');
+  const rewardAmount = document.getElementById('reward-amount');
+
+  let currentIndex = 0;
+  let total = 0;
+  let currentReward = 0;
+  let selectedAnswer = null;
+
+  // Predefined rewards that sum between 321 and 367
+  const rewards = [45, 43, 38, 50, 48, 44, 39];
+
+  function updateQuestion() {
+    if (currentIndex >= questions.length) {
+      // End of survey
+      questionText.textContent = "Pesquisa concluída! Obrigado por participar.";
+      artistImg.style.display = 'none';
+      btnUnder18.style.display = 'none';
+      btnOver18.style.display = 'none';
+      submitBtn.style.display = 'none';
+      rewardBox.style.visibility = 'hidden';
+      return;
     }
+    const q = questions[currentIndex];
+    questionText.textContent = q.question;
+    artistImg.src = q.image;
+    artistImg.style.display = 'block';
+    totalDisplay.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    rewardBox.style.visibility = 'hidden';
+    selectedAnswer = null;
+    btnUnder18.style.backgroundColor = '#2ecc71';
+    btnOver18.style.backgroundColor = '#95a5a6';
+  }
 
-    // Inicializa a primeira pergunta
-    window.onload = exibirPergunta;
-  </script>
+  btnUnder18.onclick = () => {
+    selectedAnswer = '-18';
+    btnUnder18.style.backgroundColor = '#27ae60';
+    btnOver18.style.backgroundColor = '#95a5a6';
+  };
 
+  btnOver18.onclick = () => {
+    selectedAnswer = '+18';
+    btnOver18.style.backgroundColor = '#7f8c8d';
+    btnUnder18.style.backgroundColor = '#2ecc71';
+  };
+
+  submitBtn.onclick = () => {
+    if (!selectedAnswer) {
+      alert("Por favor, selecione uma resposta antes de enviar.");
+      return;
+    }
+    currentReward = rewards[currentIndex];
+    total += currentReward;
+    rewardAmount.textContent = `R$ ${currentReward.toFixed(2).replace('.', ',')}`;
+    rewardBox.style.visibility = 'visible';
+    totalDisplay.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    currentIndex++;
+    if(currentIndex < questions.length) {
+      setTimeout(() => {
+        updateQuestion();
+      }, 1500);
+    } else {
+      setTimeout(() => {
+        questionText.textContent = "Pesquisa concluída! Obrigado por participar.";
+        artistImg.style.display = 'none';
+        btnUnder18.style.display = 'none';
+        btnOver18.style.display = 'none';
+        submitBtn.style.display = 'none';
+        rewardBox.style.visibility = 'hidden';
+        totalDisplay.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+      }, 1500);
+    }
+  };
+
+  updateQuestion();
+</script>
 </body>
 </html>
